@@ -1,33 +1,41 @@
 import string
-from string import punctuation
 import random
 import pyperclip
+import secrets
 
-upper = list(string.ascii_uppercase)
-lower = list(string.ascii_lowercase)
-special = list(punctuation)
-num = list(string.digits)
+UPPERCASE_CHARS = string.ascii_uppercase
+LOWERCASE_CHARS = string.ascii_lowercase
+SPECIAL_CHARS = string.punctuation
+NUMBERS = string.digits
 
+upper_input = int(input("Enter number of uppercase letters required: "))
+lower_input = int(input("Enter number of lowercase letters required: "))
+special_char_input = int(input("Enter number of SPECIAL_CHARS characters required: "))
+num_input = int(input("Enter number of NUMBERS required: "))
 
-upper_input = input('Enter number of uppercase letters required: ')
-lower_input = input('Enter number of lowercase letters required: ')
-special_char_input = input('Enter number of special characters: ')
-num_input = input('Enter number of numbers needed: ')
+password = ""
 
-a = random.choices(upper, k = int(upper_input))
-b = random.choices(lower, k = int(lower_input))
-c = random.choices(special, k = int(special_char_input))
-d = random.choices(num, k = int(num_input))
+for a in range(0, upper_input):
+    random_upper = secrets.choice(UPPERCASE_CHARS)
+    password += random_upper
+for b in range(0, lower_input):
+    random_lower = secrets.choice(LOWERCASE_CHARS)
+    password += random_lower
+for c in range(0, special_char_input):
+    random_special = secrets.choice(SPECIAL_CHARS)
+    password += random_special
+for d in range(0, num_input):
+    random_number = secrets.choice(NUMBERS)
+    password += random_number
 
-str = ""
-password = str.join(a + b + c + d) 
 password_shuffled = ''.join(random.sample(password,len(password)))
-pyperclip.copy(password_shuffled)
-print('Your password has been copied to clipboard.')
-inp = input('Would you like to see/manually copy your password? (y/n) :  ')
-if inp == 'y':
-    print(password_shuffled)
-else:
-    pass
 
-input()
+pyperclip.copy(password)
+print('Your password has been copied to clipboard.')
+manual_copy_choice = input('Would you like to see/manually copy your password? (Y/n) :  ').lower()
+if manual_copy_choice == 'n':
+    pass
+else:
+    print(password_shuffled)
+
+input("Press any key to exit.")
